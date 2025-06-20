@@ -16,5 +16,6 @@ class AppRouter {
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (context) => SplashScreen());
     }
+    return null;
   };
 }
