@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 foregroundColor: AppColors.whiteColor,
                 buttonText: 'Log in',
                 onPressed: () {
-                  
+                  Navigator.pushNamed(context, Routes.homeScreen);
                 },
               ),
               SizedBox(height: 24),

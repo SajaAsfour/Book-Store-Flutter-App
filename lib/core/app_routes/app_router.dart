@@ -3,6 +3,7 @@
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
+import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
 import 'package:book_store/features/splash_screen/presentation/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,9 @@ class AppRouter {
                 ));
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (context) => SplashScreen());
+
+      case Routes.homeScreen:
+        return MaterialPageRoute(builder: (context) => HomeScreen());
     }
     return null;
   };

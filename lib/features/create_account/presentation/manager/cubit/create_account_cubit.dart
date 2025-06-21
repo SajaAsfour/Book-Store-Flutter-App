@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:book_store/core/services/local/shared_prefs_helper.dart';
 import 'package:book_store/features/create_account/data/repo/create_account_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -24,6 +25,8 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
 
     if (response is Response) {
       if(response.statusCode  == 201){
+        SharedPrefsHelper.saveData(key: SharedPrefsKeys.userToken, 
+        value: response.data['data']['token'],);
         emit(CreateAccountSuccess());
       }else{
         emit(CreateAccountError(response.data['message']));
