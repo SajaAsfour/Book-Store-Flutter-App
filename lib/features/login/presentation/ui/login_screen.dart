@@ -108,7 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     size: 14,
                     color: AppColors.pinkColor,
                     fontWeight: FontWeight.w400,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.forgetPasswordScreen);
+                    },
                   ),
                 ],
               ),

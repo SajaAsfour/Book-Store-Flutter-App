@@ -3,6 +3,7 @@
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
+import 'package:book_store/features/forget_password/presentation/ui/forget_password_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
 import 'package:book_store/features/splash_screen/presentation/ui/splash_screen.dart';
@@ -25,6 +26,12 @@ class AppRouter {
 
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (context) => HomeScreen());
+
+      case Routes.forgetPasswordScreen:
+        return MaterialPageRoute(builder: (context) => ForgetPasswordScreen());
+
+      case Routes.codeScreen:
+        return MaterialPageRoute(builder: (context) => SplashScreen());
     }
     return null;
   };
