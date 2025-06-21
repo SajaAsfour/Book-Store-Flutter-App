@@ -8,13 +8,13 @@ class button extends StatelessWidget {
   final Color backgroundColor;
   final Color foregroundColor;
   final String buttonText;
-  final String routeName;
+  final VoidCallback onPressed ;
   const button({
     super.key,
     required this.backgroundColor,
     required this.foregroundColor,
     required this.buttonText, 
-    required this.routeName,
+    required this.onPressed,
   });
 
   @override
@@ -23,9 +23,7 @@ class button extends StatelessWidget {
       height: 48,
       width: 343,
       child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,

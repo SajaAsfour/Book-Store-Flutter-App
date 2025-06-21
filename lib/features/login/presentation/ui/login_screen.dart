@@ -19,7 +19,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool rememberMe = false;
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
+  @override
+  void dispose (){
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 8),
               SpecialFormField(
+                controller: emailController,
                 hint: "Example@gmail.com",
                 obscureText: false,
               ),
@@ -64,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 8),
               SpecialFormField(
+                controller: passwordController,
                 hint: "**********",
                 obscureText: true,
               ),
@@ -107,7 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: AppColors.pinkColor,
                 foregroundColor: AppColors.whiteColor,
                 buttonText: 'Log in',
-                routeName: "",
+                onPressed: () {
+                  
+                },
               ),
               SizedBox(height: 24),
               Row(

@@ -39,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 : 'assets/images/library_bg.png',
             fit: BoxFit.cover,
           ),
-
           if (showContent)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -67,9 +66,23 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   ),
                   const SizedBox(height: 32),
-                  button(backgroundColor: AppColors.pinkColor, foregroundColor: AppColors.whiteColor, buttonText: 'Log in', routeName: Routes.loginScreen,),
+                  button(
+                    backgroundColor: AppColors.pinkColor,
+                    foregroundColor: AppColors.whiteColor,
+                    buttonText: 'Log in',
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.loginScreen);
+                    },
+                  ),
                   const SizedBox(height: 12),
-                  button(backgroundColor: AppColors.whiteColor, foregroundColor: AppColors.pinkColor, buttonText: "Create account", routeName: Routes.createAccountScreen),
+                  button(
+                    backgroundColor: AppColors.whiteColor,
+                    foregroundColor: AppColors.pinkColor,
+                    buttonText: "Create account",
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.createAccountScreen);
+                    },
+                  ),
                   const SizedBox(height: 40),
                 ],
               ),

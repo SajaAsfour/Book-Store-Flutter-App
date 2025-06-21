@@ -7,12 +7,13 @@ class SpecialFormField extends StatefulWidget {
   final String hint;
   final bool obscureText;
   final Widget? suffixIcon;
-
+  final TextEditingController controller;
   const SpecialFormField({
     super.key,
     required this.hint,
     required this.obscureText,
     this.suffixIcon,
+    required this.controller,
   });
 
   @override
@@ -28,6 +29,7 @@ class _SpecialFormFieldState extends State<SpecialFormField> {
       width: 343,
       height: 44,
       child: TextFormField(
+        controller: widget.controller,
         obscureText: widget.obscureText ? _isObscure : false,
         decoration: InputDecoration(
           suffixIcon: widget.obscureText
@@ -54,7 +56,6 @@ class _SpecialFormFieldState extends State<SpecialFormField> {
             borderRadius: BorderRadius.circular(8), // Radius 8px
             borderSide: BorderSide(width: 1), // Border 1px
           ),
-          
         ),
       ),
     );

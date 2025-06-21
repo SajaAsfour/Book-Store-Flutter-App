@@ -8,5 +8,5 @@ class AppColors {
   static Color hintColor = Color.fromRGBO(0, 0, 0, 0.25);
   static Color greyColor = Colors.grey;
   static Color blackColor = Colors.black;
-
+  static Color transparenteColor = Colors.transparent;
 }
