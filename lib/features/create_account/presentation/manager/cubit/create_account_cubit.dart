@@ -6,7 +6,10 @@ import 'package:bloc/bloc.dart';
 import 'package:book_store/core/services/local/shared_prefs_helper.dart';
 import 'package:book_store/features/create_account/data/repo/create_account_repo.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
 part 'create_account_state.dart';
@@ -57,6 +60,41 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
       }
     } else {
       emit(CreateAccountError('An unexpected error occurred, please try again later.'));
+    }
+  }
+  Future<void> signInWithGoogle() async {
+    emit(CreateAccountLoading());
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        emit(CreateAccountError('Google Sign-In cancelled'));
+        return;
+      }
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      emit(CreateAccountSuccess());
+    } catch (e) {
+      emit(CreateAccountError(e.toString()));
+    }
+  }
+
+  Future<void> signInWithFacebook() async {
+    emit(CreateAccountLoading());
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        emit(CreateAccountSuccess());
+      } else {
+        emit(CreateAccountError('Facebook Sign-In failed'));
+      }
+    } catch (e) {
+      emit(CreateAccountError(e.toString()));
     }
   }
 }

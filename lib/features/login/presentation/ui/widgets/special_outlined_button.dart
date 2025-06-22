@@ -7,17 +7,20 @@ import 'package:flutter/material.dart';
 class SpecialOutlinedButton extends StatelessWidget {
   final String imageUrl;
   final String text;
+  final VoidCallback? onPressed;
+
   const SpecialOutlinedButton({
     super.key,
     required this.imageUrl,
     required this.text,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: OutlinedButton.icon(
-        onPressed: () {},
+        onPressed: onPressed,
         icon: Image.asset(
           imageUrl,
           width: 22,

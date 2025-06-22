@@ -68,15 +68,15 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           backgroundColor: AppColors.transparenteColor,
                           content: Center(child: CircularProgressIndicator()),
                         ));
-              }else if (state is CreateAccountError){
+              } else if (state is CreateAccountError) {
                 Navigator.pop(context); // to close the dialog
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
                           content: Text(state.errorMsg),
                         ));
-              }else if (state is CreateAccountSuccess){
-                Navigator.pushNamed(context, Routes.splashScreen);
+              } else if (state is CreateAccountSuccess) {
+                Navigator.pushNamed(context, Routes.homeScreen);
               }
             },
             child: Column(
@@ -149,7 +149,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                     ),
                     LabelText(
-                      text: "Agree with",
+                      text: " Agree with",
                       size: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -199,11 +199,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     SpecialOutlinedButton(
                       imageUrl: 'assets/images/facebook_icon.png',
                       text: 'Facebook',
+                      onPressed: () {
+                        context.read<CreateAccountCubit>().signInWithFacebook();
+                      },
                     ),
                     SizedBox(width: 16.h),
                     SpecialOutlinedButton(
                       imageUrl: 'assets/images/google_icon.png',
                       text: 'Google',
+                      onPressed: () {
+                        context.read<CreateAccountCubit>().signInWithGoogle();
+                      },
                     )
                   ],
                 ),
