@@ -15,6 +15,8 @@ class DioFactory {
   }
 
   static PostRequest({required String url, Map<String, dynamic>? data}) async {
-    return await _dio?.post(url, data: data);
+    return await _dio?.post(url, data: data , options: Options(
+        validateStatus: (status) => true,
+      ),);
   }
 }
