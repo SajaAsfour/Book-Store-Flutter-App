@@ -78,7 +78,7 @@ class _CodeVerificationScreenState extends State<CodeVerificationScreen> {
                           content: Text(state.errorMsg),
                         ));
               } else if (state is CodeVerificationSuccess) {
-                Navigator.pushNamed(context, Routes.splashScreen);
+                Navigator.pushNamed(context, Routes.resetPasswordScreen , arguments: _getVerificationCode());
               }
             },
             child: Column(

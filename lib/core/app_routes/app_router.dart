@@ -7,6 +7,7 @@ import 'package:book_store/features/create_account/presentation/ui/create_accoun
 import 'package:book_store/features/forget_password/presentation/ui/forget_password_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
+import 'package:book_store/features/reset_password/presentation/ui/reset_password_screen.dart';
 import 'package:book_store/features/splash_screen/presentation/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => ForgetPasswordScreen());
 
       case Routes.codeScreen:
-        return MaterialPageRoute(builder: (context) => CodeVerificationScreen(email: settings.arguments as String,));
+        return MaterialPageRoute(
+            builder: (context) => CodeVerificationScreen(
+                  email: settings.arguments as String,
+                ));
+
+      case Routes.resetPasswordScreen:
+        return MaterialPageRoute(
+            builder: (context) => ResetPasswordScreen(
+                  code: settings.arguments as String,
+                ));
     }
     return null;
   };

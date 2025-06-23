@@ -5,6 +5,7 @@ import 'package:book_store/features/code_verification/presentation/manager/cubit
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:book_store/features/login/presentation/manager/cubit/login_cubit.dart';
+import 'package:book_store/features/reset_password/presentation/manager/cubit/reset_password_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,9 @@ void main() async {
         ),
         BlocProvider<CodeVerificationCubit>(
           create: (context) => CodeVerificationCubit(),
+        ),
+        BlocProvider<ResetPasswordCubit>(
+          create: (context) => ResetPasswordCubit(),
         ),
       ],
       child: const BookStore(),
