@@ -66,7 +66,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           content: Text(state.errorMsg),
                         ));
               } else if (state is ForgetPasswordSuccess) {
-                Navigator.pushNamed(context, Routes.codeScreen);
+                Navigator.pushNamed(context, Routes.codeScreen , arguments: emailController.text);
               }
             },
             child: Column(

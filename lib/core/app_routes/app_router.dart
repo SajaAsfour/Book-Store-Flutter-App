@@ -32,7 +32,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => ForgetPasswordScreen());
 
       case Routes.codeScreen:
-        return MaterialPageRoute(builder: (context) => CodeVerificationScreen());
+        return MaterialPageRoute(builder: (context) => CodeVerificationScreen(email: settings.arguments as String,));
     }
     return null;
   };
