@@ -2,11 +2,13 @@
 
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/utils/app_colors.dart';
+import 'package:book_store/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/special_form_field.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
 import 'package:book_store/features/splash_screen/presentation/ui/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -47,48 +49,72 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       body: Padding(
         padding: EdgeInsets.only(top: 14, right: 16, bottom: 14, left: 16),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    LabelText(
-                      text: 'Enter your email',
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    LabelText(
-                      text: 'to reset your password',
-                      size: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
+          child: BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
+            listener: (context, state) {
+              if (state is ForgetPasswordLoading) {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          backgroundColor: AppColors.transparenteColor,
+                          content: Center(child: CircularProgressIndicator()),
+                        ));
+              } else if (state is ForgetPasswordError) {
+                Navigator.pop(context); // to close the dialog
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          content: Text(state.errorMsg),
+                        ));
+              } else if (state is ForgetPasswordSuccess) {
+                Navigator.pushNamed(context, Routes.codeScreen);
+              }
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      LabelText(
+                        text: 'Enter your email',
+                        size: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      LabelText(
+                        text: 'to reset your password',
+                        size: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 40),
-              LabelText(
-                text: 'Email',
-                size: 16,
-                fontWeight: FontWeight.w400,
-              ),
-              SizedBox(height: 8),
-              SpecialFormField(
-                controller: emailController,
-                hint: "Example@gmail.com",
-                obscureText: false,
-              ),
-              SizedBox(height: 16),
-              button(
-                backgroundColor: AppColors.pinkColor,
-                foregroundColor: AppColors.whiteColor,
-                buttonText: 'Send Code',
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.codeScreen);
-                },
-              ),
-            ],
+                SizedBox(height: 40),
+                LabelText(
+                  text: 'Email',
+                  size: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+                SizedBox(height: 8),
+                SpecialFormField(
+                  controller: emailController,
+                  hint: "Example@gmail.com",
+                  obscureText: false,
+                ),
+                SizedBox(height: 16),
+                button(
+                  backgroundColor: AppColors.pinkColor,
+                  foregroundColor: AppColors.whiteColor,
+                  buttonText: 'Send Code',
+                  onPressed: () {
+                    
+                    context.read<ForgetPasswordCubit>().forgetPassword(
+                          email: emailController.text,
+                        );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
