@@ -17,7 +17,7 @@ class BookStore extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: _startRoute(),
+        initialRoute: Routes.bottomNavBarScreen,
         onGenerateRoute: AppRouter.onGenerateRoute
       ),
     );

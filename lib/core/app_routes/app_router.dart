@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/core/app_routes/routes.dart';
+import 'package:book_store/features/bottom_nav_bar/presentation/ui/bottom_nav_bar_screen.dart';
 import 'package:book_store/features/code_verification/presentation/ui/code_verification_screen.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
@@ -47,6 +48,9 @@ class AppRouter {
 
       case Routes.changePasswordScreen:
         return MaterialPageRoute(builder: (context) => PasswordChangeScreen());
+
+      case Routes.bottomNavBarScreen:
+        return MaterialPageRoute(builder: (context) => BottomNavBarScreen());
     }
     return null;
   };
