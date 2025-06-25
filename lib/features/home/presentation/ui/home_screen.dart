@@ -3,6 +3,7 @@
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/features/home/presentation/manager/cubit/best_seller_cubit.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/best_seller_widget.dart';
+import 'package:book_store/features/home/presentation/ui/widgets/flash_sale_section.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/recommended_section.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/top_search_bar.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
@@ -45,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            LabelText(text: "Search Results", size: 16, fontWeight: FontWeight.w600),
+                            LabelText(
+                                text: "Search Results",
+                                size: 16,
+                                fontWeight: FontWeight.w600),
                             SizedBox(height: 12),
                             ...searchResults.map(
                               (product) => ListTile(
@@ -66,6 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               BestSellerWidget(books: state.books),
                               SizedBox(height: 24),
+                              RecommendedSection(),
+                              SizedBox(height: 24),
+                              FlashSaleSection(books: state.books),
                             ],
                           );
                         } else if (state is BestSellerError) {
@@ -75,8 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                     ),
-                    RecommendedSection(),
-                    SizedBox(height: 24),
                   ],
                 ),
               ),

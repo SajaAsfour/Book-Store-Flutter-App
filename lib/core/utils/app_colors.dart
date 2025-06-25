@@ -10,5 +10,6 @@ class AppColors {
   static Color blackColor = Colors.black;
   static Color transparenteColor = Colors.transparent;
   static Color amberColor = Colors.amber;
+  static Color flashColor = const Color.fromARGB(255, 45, 34, 50);
 
 }

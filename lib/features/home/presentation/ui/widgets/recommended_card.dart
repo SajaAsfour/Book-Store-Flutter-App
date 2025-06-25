@@ -29,13 +29,11 @@ class RecommendedCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(blurRadius: 6, color: AppColors.blackColor)],
+       
       ),
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
             child: Image.network(
               imageUrl,
               width: 93,
@@ -53,7 +51,7 @@ class RecommendedCard extends StatelessWidget {
                 Row(
                   children: [
                     LabelText(
-                      text: "Author: ",
+                      text: "Category: ",
                       size: 10,
                       fontWeight: FontWeight.w400,
                       color: AppColors.greyColor,
