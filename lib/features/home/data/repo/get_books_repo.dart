@@ -1,0 +1,18 @@
+import 'package:book_store/core/models/product_model.dart';
+import 'package:book_store/core/services/networking/dio_factory.dart';
+
+class GetBooksRepo {
+  static Future<List<ProductModel>> getBestSeller() async {
+    try {
+      final response = await DioFactory.getRequest(url: 'products-bestseller');
+      if (response != null && response.statusCode == 200) {
+        final List data = response.data['data']['products']; 
+        return data.map((json) => ProductModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load books');
+      }
+    } catch (e) {
+      throw Exception('Error fetching books: $e');
+    }
+  }
+}

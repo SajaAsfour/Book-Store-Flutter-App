@@ -2,6 +2,7 @@
 
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/widgets/bottom_nav_bar_icon.dart';
+import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -77,9 +78,21 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               icon: Icons.person_pin,
               iconText: 'Profile',
             ),
+            
           ],
         ),
       ),
+      body: _getBody(),
     );
   }
+  Widget _getBody() {
+  switch (_currentIndex) {
+    case 0:
+      return HomeScreen();
+    // other Screen
+    default:
+      return Center(child: Text('Page not found'));
+  }
+}
+
 }
