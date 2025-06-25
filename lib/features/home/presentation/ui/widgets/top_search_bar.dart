@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 
 class TopSearchBar extends StatelessWidget {
-  const TopSearchBar({super.key});
+    final Function(List<ProductModel>) onSearchResults;
+
+  const TopSearchBar({super.key, required this.onSearchResults});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,8 @@ class TopSearchBar extends StatelessWidget {
           // Search Bar
           SearchTextField(
             heightForSizeBox: 16,
-            widgetForSizeBox: 39,
+            widthForSizeBox: 39,
+            onResults: onSearchResults,
           ),
           SizedBox(width: 10),
           CircleAvatar(

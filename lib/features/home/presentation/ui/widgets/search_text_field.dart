@@ -1,14 +1,46 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'dart:async';
+import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
+import 'package:book_store/features/home/data/repo/search_repo.dart';
 import 'package:flutter/material.dart';
 
-class SearchTextField extends StatelessWidget {
+class SearchTextField extends StatefulWidget {
   final double heightForSizeBox;
-  final double widgetForSizeBox;
+  final double widthForSizeBox;
+  final Function(List<ProductModel>) onResults;
+
   const SearchTextField({
-    super.key, required this.heightForSizeBox, required this.widgetForSizeBox,
+    super.key,
+    required this.heightForSizeBox,
+    required this.widthForSizeBox,
+    required this.onResults,
   });
+
+  @override
+  State<SearchTextField> createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<SearchTextField> {
+  final TextEditingController _controller = TextEditingController();
+  Timer? _debounce;
+
+  void onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (query.isNotEmpty) {
+        SearchRepo.searchProducts(query ,widget);
+      } else {
+        widget.onResults([]);
+      }
+    });
+  }
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,35 +55,41 @@ class SearchTextField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: SizedBox(
-                height: heightForSizeBox,
-                width: widgetForSizeBox,
+                height: widget.heightForSizeBox,
+                width: widget.widthForSizeBox,
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: _controller,
+                  onChanged: onSearchChanged,
+                  decoration: InputDecoration( 
                     hintText: 'Search',
                     hintStyle: TextStyle(
-                        color: AppColors.hintColor,
-                        fontSize: 12,
-                        fontFamily: "Open Sans",
-                        fontWeight: FontWeight.w400),
+                      color: AppColors.hintColor,
+                      fontSize: 12,
+                      fontFamily: "Open Sans",
+                      fontWeight: FontWeight.w400,
+                    ),
                     border: InputBorder.none,
                   ),
                 ),
               ),
             ),
             IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.mic, color: AppColors.greyColor ,size: 20,)),
+              onPressed: () {},
+              icon: Icon(Icons.mic, color: AppColors.greyColor, size: 20),
+            ),
             VerticalDivider(
               width: 1,
               thickness: 1,
               color: AppColors.greyColor,
             ),
             IconButton(
-              icon: Icon(Icons.search, color: AppColors.pinkColor ,size: 18,),
-              onPressed: () {},
+              icon: Icon(Icons.search, color: AppColors.pinkColor, size: 18),
+              onPressed: () {
+                onSearchChanged(_controller.text);
+              },
             ),
           ],
         ),
