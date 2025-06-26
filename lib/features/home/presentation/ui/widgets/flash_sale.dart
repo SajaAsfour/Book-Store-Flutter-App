@@ -131,7 +131,7 @@ class FlashSale extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Icon(Icons.shopping_cart,
-                              color: Colors.white, size: 16),
+                              color: AppColors.whiteColor, size: 16),
                         ),
                       ],
                     )

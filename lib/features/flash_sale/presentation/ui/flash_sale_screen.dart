@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
 import 'package:book_store/core/models/product_model.dart';
-import 'package:book_store/features/home/presentation/ui/widgets/flash_sale.dart';
+import 'package:book_store/features/flash_sale/presentation/ui/widgets/paginated_flash_sale.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class FlashSaleScreen extends StatelessWidget {
         ),
         title: TitleText(title: "Flash Sale"),
       ),
-      body: FlashSale(flashBooks: flashBooks)
+      body: PaginatedFlashSale(flashBooks: flashBooks)
     );
   }
 }

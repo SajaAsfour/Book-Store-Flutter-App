@@ -67,7 +67,7 @@ class RecommendedSection extends StatelessWidget {
           } else if (state is RecommendedError) {
             return Center(child: Text(state.message));
           } else {
-            return const SizedBox();
+            return SizedBox();
           }
         },
       ),

@@ -81,10 +81,9 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
               children: [
                 Expanded(
                   child: GridView.builder(
-                    padding:  EdgeInsets.all(12),
+                    padding: EdgeInsets.all(12),
                     itemCount: currentBooks.length,
-                    gridDelegate:
-                         SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
@@ -134,7 +133,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                               ],
                             ),
                             Padding(
-                              padding:  EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   horizontal: 6.0, vertical: 4),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,38 +209,62 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: Icon(Icons.arrow_back_ios ,size: 16,),
                       onPressed: currentPage > 0 ? previousPage : null,
                       color: currentPage > 0
+                          ? AppColors.pinkColor
+                          : AppColors.greyColor,
+                    ),
+                    LabelText(
+                      text: "Previous",
+                      size: 14,
+                      fontWeight: FontWeight.w600,
+                      color:  currentPage > 0
                           ? AppColors.pinkColor
                           : AppColors.greyColor,
                     ),
                     ...List.generate(totalPages, (index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4),
-                        child: TextButton(
-                          onPressed: () => setState(() => currentPage = index),
-                          style: TextButton.styleFrom(
-                            backgroundColor: currentPage == index
-                                ? AppColors.pinkColor
-                                : AppColors.whiteColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        child: SizedBox(
+                          height: 32,
+                          width: 32,
+                          child: TextButton(
+                            onPressed: () =>
+                                setState(() => currentPage = index),
+                            style: TextButton.styleFrom(
+                              backgroundColor: currentPage == index
+                                  ? AppColors.pinkColor
+                                  : AppColors.whiteColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
-                          ),
-                          child: Text(
-                            '${index + 1}',
-                            style: TextStyle(
-                              color: currentPage == index
-                                  ? AppColors.whiteColor
-                                  : AppColors.pinkColor,
+                            child: Text(
+                              '${index + 1}',
+                              style: TextStyle(
+                                color: currentPage == index
+                                    ? AppColors.whiteColor
+                                    : AppColors.pinkColor,
+                              ),
                             ),
                           ),
                         ),
                       );
                     }),
+                    LabelText(
+                      text: "Next",
+                      size: 14,
+                      fontWeight: FontWeight.w600,
+                      color:  currentPage < totalPages - 1
+                          ? AppColors.pinkColor
+                          : AppColors.greyColor,
+                    ),
                     IconButton(
-                      icon:  Icon(Icons.arrow_forward_ios),
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
                       onPressed: currentPage < totalPages - 1 ? nextPage : null,
                       color: currentPage < totalPages - 1
                           ? AppColors.pinkColor
@@ -249,7 +272,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                     ),
                   ],
                 ),
-                 SizedBox(height: 12),
+                SizedBox(height: 12),
               ],
             ),
     );
