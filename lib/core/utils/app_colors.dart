@@ -11,4 +11,7 @@ class AppColors {
   static Color transparenteColor = Colors.transparent;
   static Color amberColor = Colors.amber;
   static Color flashColor = Color.fromARGB(255, 45, 34, 50);
+  static Color? greenColor = Colors.green[300];
+  static Color redColor = Colors.red;
+  static Color  orangeColor = Color.fromARGB(234, 164, 81, 1);
 }

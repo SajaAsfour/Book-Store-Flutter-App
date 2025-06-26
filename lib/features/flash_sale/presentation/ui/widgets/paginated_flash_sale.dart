@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
@@ -64,13 +65,19 @@ class _PaginatedFlashSaleState extends State<PaginatedFlashSale> {
                 ),
                 child: Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        book.image,
-                        width: 93,
-                        height: 131,
-                        fit: BoxFit.cover,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.bookDetailsScreen,
+                            arguments: book.id);
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          book.image,
+                          width: 93,
+                          height: 131,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     SizedBox(width: 12),
@@ -183,20 +190,21 @@ class _PaginatedFlashSaleState extends State<PaginatedFlashSale> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_back_ios ,size: 16,),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 16,
+              ),
               onPressed: currentPage > 0 ? previousPage : null,
-              color: currentPage > 0
-                  ? AppColors.pinkColor
-                  : AppColors.greyColor,
+              color:
+                  currentPage > 0 ? AppColors.pinkColor : AppColors.greyColor,
             ),
-             LabelText(
-                      text: "Previous",
-                      size: 14,
-                      fontWeight: FontWeight.w600,
-                      color:  currentPage > 0
-                          ? AppColors.pinkColor
-                          : AppColors.greyColor,
-                    ),
+            LabelText(
+              text: "Previous",
+              size: 14,
+              fontWeight: FontWeight.w600,
+              color:
+                  currentPage > 0 ? AppColors.pinkColor : AppColors.greyColor,
+            ),
             ...List.generate(totalPages, (index) {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4),
@@ -226,17 +234,19 @@ class _PaginatedFlashSaleState extends State<PaginatedFlashSale> {
               );
             }),
             LabelText(
-                      text: "Next",
-                      size: 14,
-                      fontWeight: FontWeight.w600,
-                      color:  currentPage < totalPages - 1
-                          ? AppColors.pinkColor
-                          : AppColors.greyColor,
-                    ),
+              text: "Next",
+              size: 14,
+              fontWeight: FontWeight.w600,
+              color: currentPage < totalPages - 1
+                  ? AppColors.pinkColor
+                  : AppColors.greyColor,
+            ),
             IconButton(
-              icon: Icon(Icons.arrow_forward_ios,size: 16,),
-              onPressed:
-                  currentPage < totalPages - 1 ? nextPage : null,
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+              ),
+              onPressed: currentPage < totalPages - 1 ? nextPage : null,
               color: currentPage < totalPages - 1
                   ? AppColors.pinkColor
                   : AppColors.greyColor,

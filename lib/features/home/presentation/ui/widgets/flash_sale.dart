@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_string_interpolations
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
@@ -9,7 +10,8 @@ class FlashSale extends StatelessWidget {
   final ScrollPhysics? scrollPhysics;
   const FlashSale({
     super.key,
-    required this.flashBooks, this.scrollPhysics,
+    required this.flashBooks,
+    this.scrollPhysics,
   });
 
   final List<ProductModel> flashBooks;
@@ -26,7 +28,7 @@ class FlashSale extends StatelessWidget {
         final double progress = (100 - book.discount) / 100;
         final double oldPrice = double.tryParse(book.price) ?? 0;
         final double newPrice = book.priceAfterDiscount;
-    
+
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16),
           padding: EdgeInsets.all(12),
@@ -35,12 +37,18 @@ class FlashSale extends StatelessWidget {
           ),
           child: Row(
             children: [
-              ClipRRect(
-                child: Image.network(
-                  book.image,
-                  width: 93,
-                  height: 131,
-                  fit: BoxFit.cover,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.bookDetailsScreen,
+                      arguments: book.id);
+                },
+                child: ClipRRect(
+                  child: Image.network(
+                    book.image,
+                    width: 93,
+                    height: 131,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(width: 12),

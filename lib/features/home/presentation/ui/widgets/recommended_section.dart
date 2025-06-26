@@ -61,6 +61,7 @@ class RecommendedSection extends StatelessWidget {
                               0.0,
                       rating: 4.0,
                       reviewCount: 180,
+                      id: book.id,
                     )),
               ],
             );

@@ -10,4 +10,5 @@ class Routes {
   static const String bottomNavBarScreen = '/bottomNavBarScreen';
   static const String allBooksScreen = '/allBooksScreen';
   static const String flashSaleScreen = '/flashSaleScreen';
+  static const String bookDetailsScreen = '/bookDetailsScreen';
 }

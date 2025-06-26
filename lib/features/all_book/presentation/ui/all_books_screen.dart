@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/core/models/product_model.dart';
@@ -102,14 +103,21 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                           children: [
                             Stack(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: SizedBox(
-                                    height: 246,
-                                    width: 164,
-                                    child: Image.network(
-                                      book.image,
-                                      fit: BoxFit.cover,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, Routes.bookDetailsScreen,
+                                        arguments: book.id);
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: SizedBox(
+                                      height: 246,
+                                      width: 164,
+                                      child: Image.network(
+                                        book.image,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -209,7 +217,10 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios ,size: 16,),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        size: 16,
+                      ),
                       onPressed: currentPage > 0 ? previousPage : null,
                       color: currentPage > 0
                           ? AppColors.pinkColor
@@ -219,7 +230,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                       text: "Previous",
                       size: 14,
                       fontWeight: FontWeight.w600,
-                      color:  currentPage > 0
+                      color: currentPage > 0
                           ? AppColors.pinkColor
                           : AppColors.greyColor,
                     ),
@@ -256,7 +267,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                       text: "Next",
                       size: 14,
                       fontWeight: FontWeight.w600,
-                      color:  currentPage < totalPages - 1
+                      color: currentPage < totalPages - 1
                           ? AppColors.pinkColor
                           : AppColors.greyColor,
                     ),

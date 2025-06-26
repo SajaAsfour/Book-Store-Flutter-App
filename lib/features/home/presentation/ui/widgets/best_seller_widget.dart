@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
@@ -60,10 +61,10 @@ class _BestSellerWidgetState extends State<BestSellerWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: LabelText(text: "Best Seller", size: 16, fontWeight: FontWeight.w600),
+          child: LabelText(
+              text: "Best Seller", size: 16, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 24),
-
         SizedBox(
           height: 180,
           child: PageView.builder(
@@ -74,13 +75,19 @@ class _BestSellerWidgetState extends State<BestSellerWidget> {
               final book = widget.books[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    book.image,
-                    fit: BoxFit.cover,
-                    width: 119.77,
-                    height: 180,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.bookDetailsScreen,
+                        arguments: book.id);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      book.image,
+                      fit: BoxFit.cover,
+                      width: 119.77,
+                      height: 180,
+                    ),
                   ),
                 ),
               );
