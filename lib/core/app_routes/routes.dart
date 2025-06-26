@@ -9,4 +9,5 @@ class Routes {
   static const String changePasswordScreen = '/changePasswordScreen';
   static const String bottomNavBarScreen = '/bottomNavBarScreen';
   static const String allBooksScreen = '/allBooksScreen';
+  static const String flashSaleScreen = '/flashSaleScreen';
 }

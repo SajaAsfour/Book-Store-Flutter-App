@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/core/app_routes/routes.dart';
+import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/bottom_nav_bar_screen.dart';
 import 'package:book_store/features/code_verification/presentation/ui/code_verification_screen.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
+import 'package:book_store/features/flash_sale/presentation/ui/flash_sale_screen.dart';
 import 'package:book_store/features/forget_password/presentation/ui/forget_password_screen.dart';
 import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
@@ -55,6 +57,9 @@ class AppRouter {
 
       case Routes.allBooksScreen:
         return MaterialPageRoute(builder: (context) => AllBooksScreen());
+
+      case Routes.flashSaleScreen:
+        return MaterialPageRoute(builder: (context) => FlashSaleScreen(books: settings.arguments as List<ProductModel>,));
     }
     return null;
   };
