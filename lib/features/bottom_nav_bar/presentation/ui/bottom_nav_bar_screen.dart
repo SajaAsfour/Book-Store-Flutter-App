@@ -2,6 +2,7 @@
 
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/widgets/bottom_nav_bar_icon.dart';
+import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -89,7 +90,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   switch (_currentIndex) {
     case 0:
       return HomeScreen();
-    // other Screen
+    case 1:
+      return AllBooksScreen();
     default:
       return Center(child: Text('Page not found'));
   }

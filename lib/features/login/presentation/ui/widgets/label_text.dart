@@ -7,11 +7,12 @@ class LabelText extends StatelessWidget {
   final double size;
   final Color? color;
   final FontWeight fontWeight;
+  final TextOverflow? overflow;
   const LabelText({
     super.key,
     required this.text,
     required this.size,
-    this.color, required this.fontWeight,
+    this.color, required this.fontWeight,  this.overflow,
   });
 
   @override
@@ -21,6 +22,7 @@ class LabelText extends StatelessWidget {
             color: color,
             fontSize: size,
             fontFamily: "Open Sans",
+            overflow: overflow,
             fontWeight: fontWeight));
   }
 }

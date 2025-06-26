@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/home/presentation/manager/cubit/recommended_cubit.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/recommended_card.dart';
@@ -32,7 +33,9 @@ class RecommendedSection extends StatelessWidget {
                           fontWeight: FontWeight.w600),
                       Spacer(),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          Navigator.pushNamed(context, Routes.allBooksScreen);
+                        },
                         child: Row(
                           children: [
                             LabelText(

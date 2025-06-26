@@ -6,6 +6,7 @@ import 'package:book_store/features/code_verification/presentation/ui/code_verif
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
 import 'package:book_store/features/forget_password/presentation/ui/forget_password_screen.dart';
+import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
 import 'package:book_store/features/password_change/presentation/ui/password_change_screen.dart';
@@ -51,6 +52,9 @@ class AppRouter {
 
       case Routes.bottomNavBarScreen:
         return MaterialPageRoute(builder: (context) => BottomNavBarScreen());
+
+      case Routes.allBooksScreen:
+        return MaterialPageRoute(builder: (context) => AllBooksScreen());
     }
     return null;
   };

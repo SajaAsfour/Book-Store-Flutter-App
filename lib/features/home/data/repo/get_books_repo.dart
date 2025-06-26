@@ -15,4 +15,17 @@ class GetBooksRepo {
       throw Exception('Error fetching books: $e');
     }
   }
+
+  static Future<List<ProductModel>> fetchAllProducts() async {
+    final response = await DioFactory.getRequest(url: "products");
+
+    if (response != null &&
+        response.data != null &&
+        response.data["data"] != null) {
+      List<dynamic> jsonList = response.data["data"]["products"];
+      return jsonList.map((e) => ProductModel.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to load products");
+    }
+  }
 }
