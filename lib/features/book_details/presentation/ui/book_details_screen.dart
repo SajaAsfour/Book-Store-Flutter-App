@@ -3,6 +3,7 @@
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/book_details/presentation/manager/cubit/book_details_cubit.dart';
 import 'package:book_store/features/book_details/presentation/manager/cubit/quantity_cubit.dart';
+import 'package:book_store/features/book_details/presentation/ui/widgets/add_cart_button.dart';
 import 'package:book_store/features/book_details/presentation/ui/widgets/inside_box_widget.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
@@ -258,67 +259,7 @@ class BookDetailsScreen extends StatelessWidget {
             return SizedBox();
           },
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: BlocBuilder<QuantityCubit, int>(
-                    builder: (context, quantity) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () =>
-                                context.read<QuantityCubit>().decrement(),
-                            icon: Icon(Icons.remove_circle_outline,
-                                color: AppColors.pinkColor),
-                          ),
-                          Text(
-                            '$quantity',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          IconButton(
-                            onPressed: () =>
-                                context.read<QuantityCubit>().increment(),
-                            icon: Icon(Icons.add_circle_outline,
-                                color: AppColors.pinkColor),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(width: 12),
-              ElevatedButton(
-                onPressed: () {
-                  // Handle Add to Cart
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.pinkColor,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                child: LabelText(
-                  text: "Add to cart",
-                  size: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.whiteColor,
-                ),
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: AddCartButton(),
       ),
     );
   }
