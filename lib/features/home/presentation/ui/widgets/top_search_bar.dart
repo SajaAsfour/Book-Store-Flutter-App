@@ -17,10 +17,12 @@ class TopSearchBar extends StatelessWidget {
       child: Row(
         children: [
           // Search Bar
-          SearchTextField(
-            heightForSizeBox: 16,
-            widthForSizeBox: 39,
-            onResults: onSearchResults,
+          Expanded(
+            child: SearchTextField(
+              heightForSizeBox: 16,
+              widthForSizeBox: 39,
+              onResults: onSearchResults,
+            ),
           ),
           SizedBox(width: 10),
           CircleAvatar(

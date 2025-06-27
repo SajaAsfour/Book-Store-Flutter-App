@@ -6,7 +6,7 @@ import 'package:book_store/features/home/presentation/ui/widgets/best_seller_wid
 import 'package:book_store/features/home/presentation/ui/widgets/flash_sale_section.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/recommended_section.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/top_search_bar.dart';
-import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
+import 'package:book_store/features/search/presentation/ui/widgets/search_results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,26 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
                   children: [
                     if (searchResults.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LabelText(
-                                text: "Search Results",
-                                size: 16,
-                                fontWeight: FontWeight.w600),
-                            SizedBox(height: 12),
-                            ...searchResults.map(
-                              (product) => ListTile(
-                                leading: Image.network(product.image, width: 40),
-                                title: Text(product.name),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
+                      SearchResults(searchResults: searchResults),
                     BlocBuilder<BestSellerCubit, BestSellerState>(
                       builder: (context, state) {
                         if (state is BestSellerLoading) {

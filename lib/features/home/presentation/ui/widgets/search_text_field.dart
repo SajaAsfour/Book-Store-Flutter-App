@@ -44,55 +44,53 @@ class _SearchTextFieldState extends State<SearchTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 38,
-        width: 239,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: AppColors.hintColor),
-        ),
-        child: Row(
-          children: [
-            const SizedBox(width: 15),
-            Expanded(
-              child: SizedBox(
-                height: widget.heightForSizeBox,
-                width: widget.widthForSizeBox,
-                child: TextField(
-                  controller: _controller,
-                  onChanged: onSearchChanged,
-                  decoration: InputDecoration( 
-                    hintText: 'Search',
-                    hintStyle: TextStyle(
-                      color: AppColors.hintColor,
-                      fontSize: 12,
-                      fontFamily: "Open Sans",
-                      fontWeight: FontWeight.w400,
-                    ),
-                    border: InputBorder.none,
+    return Container(
+      height: 38,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: AppColors.hintColor),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 15),
+          Expanded(
+            child: SizedBox(
+              height: widget.heightForSizeBox,
+              width: widget.widthForSizeBox,
+              child: TextField(
+                controller: _controller,
+                onChanged: onSearchChanged,
+                decoration: InputDecoration( 
+                  hintText: 'Search',
+                  hintStyle: TextStyle(
+                    color: AppColors.hintColor,
+                    fontSize: 12,
+                    fontFamily: "Open Sans",
+                    fontWeight: FontWeight.w400,
                   ),
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.mic, color: AppColors.greyColor, size: 20),
-            ),
-            VerticalDivider(
-              width: 1,
-              thickness: 1,
-              color: AppColors.greyColor,
-            ),
-            IconButton(
-              icon: Icon(Icons.search, color: AppColors.pinkColor, size: 18),
-              onPressed: () {
-                onSearchChanged(_controller.text);
-              },
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.mic, color: AppColors.greyColor, size: 20),
+          ),
+          VerticalDivider(
+            width: 1,
+            thickness: 1,
+            color: AppColors.greyColor,
+          ),
+          IconButton(
+            icon: Icon(Icons.search, color: AppColors.pinkColor, size: 18),
+            onPressed: () {
+              onSearchChanged(_controller.text);
+            },
+          ),
+        ],
       ),
     );
   }

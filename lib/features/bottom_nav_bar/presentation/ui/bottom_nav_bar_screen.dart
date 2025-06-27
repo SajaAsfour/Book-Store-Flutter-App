@@ -4,6 +4,7 @@ import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/widgets/bottom_nav_bar_icon.dart';
 import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
+import 'package:book_store/features/search/presentation/ui/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -92,6 +93,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       return HomeScreen();
     case 1:
       return AllBooksScreen();
+    
+    case 2: 
+      return SearchScreen();
     default:
       return Center(child: Text('Page not found'));
   }

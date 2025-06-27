@@ -18,7 +18,7 @@ class AddCartButton extends StatelessWidget {
         height: 56,
         decoration: BoxDecoration(
           color: AppColors.pinkColor,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
