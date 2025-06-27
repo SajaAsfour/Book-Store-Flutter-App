@@ -32,16 +32,12 @@ class RateBook extends StatelessWidget {
         }),
         SizedBox(width: 6),
         LabelText(
-          text: "($reviewCount ",
+          text: "($reviewCount \n Review)",
           size: 10,
           fontWeight: FontWeight.w400,
           color: AppColors.greyColor,
         ),
-        LabelText(
-            text: "Review)",
-            size: 10,
-            fontWeight: FontWeight.w400,
-            color: AppColors.greyColor)
+        
       ],
     );
   }
