@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/product_model.dart';
-import 'package:book_store/features/home/data/repo/get_books_repo.dart';
+import 'package:book_store/features/all_book/data/repo/get_books_repo.dart';
 import 'package:meta/meta.dart';
 
 part 'best_seller_state.dart';

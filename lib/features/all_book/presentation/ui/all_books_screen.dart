@@ -10,7 +10,7 @@ import 'package:book_store/features/search/presentation/ui/widgets/search_result
 import 'package:flutter/material.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/core/models/product_model.dart';
-import 'package:book_store/features/home/data/repo/get_books_repo.dart';
+import 'package:book_store/features/all_book/data/repo/get_books_repo.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/rate_book.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
@@ -150,7 +150,17 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                           SizedBox(width: 12),
                           Expanded(
                               child: ButtonForFilterOrSort(
-                                  text: 'Sort By', iconData: Icons.swap_vert)),
+                            text: 'Sort (A to Z)',
+                            iconData: Icons.swap_vert,
+                            onTap: () async {
+                              List<ProductModel> sortedProducts =
+                                  await GetBooksRepo
+                                      .fetchAllProductsSortedByName();
+                              setState(() {
+                                allBooks = sortedProducts;
+                              });
+                            },
+                          )),
                         ],
                       ),
                     ),

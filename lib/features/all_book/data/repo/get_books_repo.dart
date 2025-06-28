@@ -28,4 +28,22 @@ class GetBooksRepo {
       throw Exception("Failed to load products");
     }
   }
+
+  static Future<List<ProductModel>> fetchAllProductsSortedByName() async {
+  final response = await DioFactory.getRequest(url: "products");
+
+  if (response != null &&
+      response.data != null &&
+      response.data["data"] != null) {
+    List<dynamic> jsonList = response.data["data"]["products"];
+    
+    List<ProductModel> products = jsonList.map((e) => ProductModel.fromJson(e)).toList();
+    
+    products.sort((a, b) => a.name.compareTo(b.name));
+
+    return products;
+  } else {
+    throw Exception("Failed to load products");
+  }
+}
 }
