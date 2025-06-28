@@ -7,14 +7,16 @@ import 'package:flutter/material.dart';
 class ButtonForFilterOrSort extends StatelessWidget {
   final String text;
   final IconData iconData;
+  final VoidCallback? onTap;
   const ButtonForFilterOrSort({
     super.key,
-    required this.text, required this.iconData,
+    required this.text, required this.iconData, this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         height: 39,
         width: 164,

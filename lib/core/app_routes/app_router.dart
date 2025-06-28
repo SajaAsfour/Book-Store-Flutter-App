@@ -3,6 +3,7 @@
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/features/book_details/presentation/ui/book_details_screen.dart';
+import 'package:book_store/features/book_filter/presentation/ui/book_filter_screen.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/bottom_nav_bar_screen.dart';
 import 'package:book_store/features/code_verification/presentation/ui/code_verification_screen.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
@@ -64,6 +65,9 @@ class AppRouter {
       
       case Routes.bookDetailsScreen:
         return MaterialPageRoute(builder: (context) => BookDetailsScreen(bookId: settings.arguments as int,));
+
+      case Routes.bookFilterScreen:
+        return MaterialPageRoute(builder: (context)=> BookFilterScreen());
     }
     return null;
   };

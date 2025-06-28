@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/features/all_book/presentation/ui/widgets/button_for_filter_or_sort.dart';
+import 'package:book_store/features/book_filter/data/repo/book_filter.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/search_text_field.dart';
 import 'package:book_store/features/search/presentation/ui/widgets/search_results.dart';
 import 'package:flutter/material.dart';
@@ -97,23 +98,62 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                     },
                   ),
                   SizedBox(height: 16),
-
                   if (searchResults.isEmpty)
                     Padding(
                       padding: EdgeInsets.only(bottom: 12),
                       child: Row(
                         children: [
                           Expanded(
-                            child: ButtonForFilterOrSort(text: 'Filter', iconData: (Icons.filter_alt_outlined),),
+                            child: ButtonForFilterOrSort(
+                              text: 'Filter',
+                              iconData: (Icons.filter_alt_outlined),
+                              onTap: () async {
+                                final filter = await Navigator.pushNamed(
+                                  context,
+                                  Routes.bookFilterScreen,
+                                ) as BookFilter?;
+
+                                if (filter != null) {
+                                  final filtered = allBooks.where((book) {
+                                    final matchesName = filter.name == null ||
+                                        book.name.toLowerCase().contains(
+                                            filter.name!.toLowerCase());
+                                    final matchesCategory =
+                                        filter.category == null ||
+                                            book.category.toLowerCase() ==
+                                                filter.category!.toLowerCase();
+                                    final matchesMinPrice = filter.minPrice ==
+                                            null ||
+                                        double.tryParse(book.price) != null &&
+                                            double.tryParse(book.price)! >=
+                                                filter.minPrice!;
+
+                                    final matchesMaxPrice = filter.maxPrice ==
+                                            null ||
+                                        double.tryParse(book.price) != null &&
+                                            double.tryParse(book.price)! <=
+                                                filter.maxPrice!;
+
+                                    return matchesName &&
+                                        matchesCategory &&
+                                        matchesMinPrice &&
+                                        matchesMaxPrice;
+                                  }).toList();
+
+                                  setState(() {
+                                    allBooks = filtered;
+                                  });
+                                }
+                              },
+                            ),
                           ),
                           SizedBox(width: 12),
                           Expanded(
-                            child: ButtonForFilterOrSort(text: 'Sort By', iconData: Icons.swap_vert)
-                          ),
+                              child: ButtonForFilterOrSort(
+                                  text: 'Sort By', iconData: Icons.swap_vert)),
                         ],
                       ),
                     ),
-
                   if (searchResults.isNotEmpty)
                     Expanded(
                       child: SingleChildScrollView(

@@ -11,4 +11,5 @@ class Routes {
   static const String allBooksScreen = '/allBooksScreen';
   static const String flashSaleScreen = '/flashSaleScreen';
   static const String bookDetailsScreen = '/bookDetailsScreen';
+  static const String bookFilterScreen = '/bookFilterScreen';
 }
