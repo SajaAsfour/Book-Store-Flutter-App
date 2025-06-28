@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
 import 'package:book_store/core/app_routes/routes.dart';
+import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
+import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/rate_book.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecommendedCard extends StatelessWidget {
+  final ProductModel book; 
   final String imageUrl;
   final String title;
   final String author;
@@ -22,7 +26,7 @@ class RecommendedCard extends StatelessWidget {
     required this.price,
     required this.rating,
     required this.reviewCount,
-    required this.id,
+    required this.id, required this.book,
   });
 
   @override
@@ -93,19 +97,26 @@ class RecommendedCard extends StatelessWidget {
                                 color: AppColors.whiteColor, size: 16),
                           )),
                       SizedBox(width: 8),
-                      Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.pinkColor, width: 1.5),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.favorite_border,
-                                color: AppColors.pinkColor, size: 16),
-                          )),
+                      BlocBuilder<FavoritesCubit, List<ProductModel>>(
+                        builder: (context, state) {
+                          final isFav = context.read<FavoritesCubit>().isFavorite(book);
+                          return Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: AppColors.pinkColor, width: 1.5),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  context.read<FavoritesCubit>().toggleFavorite(book);
+                                },
+                                icon: Icon( isFav ? Icons.favorite : Icons.favorite_border,
+                                    color: AppColors.pinkColor, size: 16),
+                              ));
+                        },
+                      ),
                     ],
                   ),
                 ],

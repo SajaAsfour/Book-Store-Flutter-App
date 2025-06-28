@@ -53,6 +53,7 @@ class RecommendedSection extends StatelessWidget {
                   ),
                 ),
                 ...state.books.map((book) => RecommendedCard(
+                      book: book,
                       imageUrl: book.image,
                       title: book.name,
                       author: book.category,

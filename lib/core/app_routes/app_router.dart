@@ -8,6 +8,7 @@ import 'package:book_store/features/bottom_nav_bar/presentation/ui/bottom_nav_ba
 import 'package:book_store/features/code_verification/presentation/ui/code_verification_screen.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
 import 'package:book_store/features/create_account/presentation/ui/create_account_screen.dart';
+import 'package:book_store/features/favorites/presentation/ui/favorites_screen.dart';
 import 'package:book_store/features/flash_sale/presentation/ui/flash_sale_screen.dart';
 import 'package:book_store/features/forget_password/presentation/ui/forget_password_screen.dart';
 import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
@@ -68,6 +69,9 @@ class AppRouter {
 
       case Routes.bookFilterScreen:
         return MaterialPageRoute(builder: (context)=> BookFilterScreen());
+
+      case Routes.favoritesScreen:
+        return MaterialPageRoute(builder: (context)=> FavoritesScreen());
     }
     return null;
   };

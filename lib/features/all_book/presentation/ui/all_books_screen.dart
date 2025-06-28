@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/features/all_book/presentation/ui/widgets/button_for_filter_or_sort.dart';
 import 'package:book_store/features/book_filter/data/repo/book_filter.dart';
+import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/search_text_field.dart';
 import 'package:book_store/features/search/presentation/ui/widgets/search_results.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:book_store/features/all_book/data/repo/get_books_repo.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/rate_book.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllBooksScreen extends StatefulWidget {
   const AllBooksScreen({super.key});
@@ -217,24 +219,32 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                                               ),
                                             ),
                                           ),
-                                          Positioned(
-                                            top: 8,
-                                            left: 8,
-                                            child: Container(
-                                              height: 30,
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.whiteColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
+                                          BlocBuilder<FavoritesCubit,
+                                                  List<ProductModel>>(
+                                              builder: (context, favorites) {
+                                                final isFav = context.read<FavoritesCubit>().isFavorite(book);
+
+                                            return Positioned(
+                                              top: 8,
+                                              left: 8,
+                                              child: Container(
+                                                height: 30,
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.whiteColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: IconButton(onPressed: (){
+                                                    context.read<FavoritesCubit>().toggleFavorite(book);
+                                                }, icon: Icon(
+                                                  isFav ? Icons.favorite : Icons.favorite_border,
+                                                  size: 14,
+                                                  color: isFav ? AppColors.pinkColor: AppColors.blackColor,
+                                                ),) 
                                               ),
-                                              child: Icon(
-                                                Icons.favorite_border,
-                                                size: 14,
-                                                color: AppColors.blackColor,
-                                              ),
-                                            ),
-                                          ),
+                                            );
+                                          }),
                                         ],
                                       ),
                                       Padding(

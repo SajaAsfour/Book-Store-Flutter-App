@@ -3,6 +3,7 @@ import 'package:book_store/core/services/local/shared_prefs_helper.dart';
 import 'package:book_store/core/services/networking/dio_factory.dart';
 import 'package:book_store/features/code_verification/presentation/manager/cubit/code_verification_cubit.dart';
 import 'package:book_store/features/create_account/presentation/manager/cubit/create_account_cubit.dart';
+import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:book_store/features/login/presentation/manager/cubit/login_cubit.dart';
 import 'package:book_store/features/reset_password/presentation/manager/cubit/reset_password_cubit.dart';
@@ -36,6 +37,10 @@ void main() async {
         ),
         BlocProvider<ResetPasswordCubit>(
           create: (context) => ResetPasswordCubit(),
+        ),
+
+        BlocProvider<FavoritesCubit>(
+          create: (contex) => FavoritesCubit()
         ),
       ],
       child: const BookStore(),
