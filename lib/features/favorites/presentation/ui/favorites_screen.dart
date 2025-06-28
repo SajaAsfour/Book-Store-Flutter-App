@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
@@ -53,13 +54,19 @@ class FavoritesScreen extends StatelessWidget {
                     side: BorderSide(color: AppColors.greyColor),
                   ),
                   tileColor: AppColors.whiteColor,
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      product.image,
-                      width: 50,
-                      height: 70,
-                      fit: BoxFit.cover,
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.bookDetailsScreen,
+                          arguments: product.id);
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        product.image,
+                        width: 50,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   title: LabelText(
