@@ -17,7 +17,7 @@ class BookStore extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.bottomNavBarScreen,
+        initialRoute: _startRoute(),
         onGenerateRoute: AppRouter.onGenerateRoute
       ),
     );
@@ -25,7 +25,7 @@ class BookStore extends StatelessWidget {
 
   _startRoute (){
     if (SharedPrefsHelper.getData(key: SharedPrefsKeys.userToken)!= null){
-      return Routes.homeScreen;
+      return Routes.bottomNavBarScreen;
     }else{
       return Routes.splashScreen;
     }

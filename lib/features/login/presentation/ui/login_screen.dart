@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           content: Text(state.errorMsg),
                         ));
               } else if (state is LoginSuccess) {
-                Navigator.pushNamed(context, Routes.homeScreen);
+                Navigator.pushNamed(context, Routes.bottomNavBarScreen);
               }
             },
             child: Column(

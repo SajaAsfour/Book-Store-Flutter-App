@@ -29,23 +29,50 @@ class FavoritesScreen extends StatelessWidget {
       body: BlocBuilder<FavoritesCubit, List<ProductModel>>(
         builder: (context, favorites) {
           if (favorites.isEmpty) {
-            return Center(child: LabelText(text: "No Favorites Yet", 
-            size: 20, fontWeight: FontWeight.w600 ,color: AppColors.pinkColor,));
+            return Center(
+              child: LabelText(
+                text: "No Favorites Yet",
+                size: 20,
+                fontWeight: FontWeight.w600,
+                color: AppColors.pinkColor,
+              ),
+            );
           }
 
           return ListView.builder(
             itemCount: favorites.length,
             itemBuilder: (context, index) {
               final product = favorites[index];
-              return ListTile(
-                leading: Image.network(product.image),
-                title: LabelText(text: product.name, size: 
-                15, fontWeight: FontWeight.w400),
-                trailing: IconButton(
-                  icon: Icon(Icons.favorite, color: AppColors.pinkColor),
-                  onPressed: () {
-                    context.read<FavoritesCubit>().toggleFavorite(product);
-                  },
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 12.0, horizontal: 16.0),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: AppColors.greyColor),
+                  ),
+                  tileColor: AppColors.whiteColor,
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      product.image,
+                      width: 50,
+                      height: 70,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  title: LabelText(
+                    text: product.name,
+                    size: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.favorite, color: AppColors.pinkColor),
+                    onPressed: () {
+                      context.read<FavoritesCubit>().toggleFavorite(product);
+                    },
+                  ),
                 ),
               );
             },

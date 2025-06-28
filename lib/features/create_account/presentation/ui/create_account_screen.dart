@@ -76,7 +76,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           content: Text(state.errorMsg),
                         ));
               } else if (state is CreateAccountSuccess) {
-                Navigator.pushNamed(context, Routes.homeScreen);
+                Navigator.pushNamed(context, Routes.bottomNavBarScreen);
               }
             },
             child: Column(
