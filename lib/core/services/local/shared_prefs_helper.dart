@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsHelper {
   static SharedPreferences? _prefs;
+  static const String imagePathKey = 'profile_image_path';
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -27,6 +28,16 @@ class SharedPrefsHelper {
 
   static removeData({required String key})async{
     await _prefs?.remove(key);
+  }
+
+  static Future<void> saveImagePath(String path) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(imagePathKey, path);
+  }
+
+  static Future<String?> getImagePath() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(imagePathKey);
   }
 }
 

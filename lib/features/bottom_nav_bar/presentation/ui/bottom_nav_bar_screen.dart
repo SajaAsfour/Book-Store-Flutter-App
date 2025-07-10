@@ -5,6 +5,7 @@ import 'package:book_store/features/bottom_nav_bar/presentation/ui/widgets/botto
 import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/search/presentation/ui/search_screen.dart';
+import 'package:book_store/features/profile/presentation/ui/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -96,6 +97,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     
     case 2: 
       return SearchScreen();
+
+    case 4:
+      return ProfileScreen();
+    
     default:
       return Center(child: Text('Page not found'));
   }

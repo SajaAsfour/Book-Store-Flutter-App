@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unused_field, non_constant_identifier_names
 
+import 'package:book_store/core/services/local/shared_prefs_helper.dart';
 import 'package:dio/dio.dart';
 
 class DioFactory {
@@ -14,6 +15,14 @@ class DioFactory {
         "Content-Type": "application/json",
       },
     ));
+  }
+
+  static Future<void> setTokenFromStorage() async {
+    final token =
+        await SharedPrefsHelper.getData(key: SharedPrefsKeys.userToken);
+    if (token != null) {
+      _dio?.options.headers["Authorization"] = "Bearer $token";
+    }
   }
 
   static Future<Response?> PostRequest({
