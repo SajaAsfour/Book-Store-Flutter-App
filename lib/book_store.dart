@@ -25,7 +25,7 @@ class BookStore extends StatelessWidget {
 
   _startRoute (){
     if (SharedPrefsHelper.getData(key: SharedPrefsKeys.userToken)!= null){
-      return Routes.bottomNavBarScreen;
+      return Routes.loginScreen;
     }else{
       return Routes.splashScreen;
     }

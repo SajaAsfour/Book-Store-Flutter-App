@@ -33,6 +33,7 @@ class LoginCubit extends Cubit<LoginState> {
           key: SharedPrefsKeys.userToken,
           value: response.data['data']['token'],
         );
+        SharedPrefsHelper.saveData(key: 'user_email', value: email);
         emit(LoginSuccess());
       } else if (response.statusCode == 422) {
         String errorMsg = response.data['message'];
@@ -58,6 +59,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginError('An unexpected error occurred, please try again later.'));
     }
   }
+
   Future<void> signInWithGoogle() async {
     emit(LoginLoading());
     try {
@@ -71,7 +73,9 @@ class LoginCubit extends Cubit<LoginState> {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      SharedPrefsHelper.saveData(key: 'user_name', value: userCredential.user?.displayName ?? '');
+      SharedPrefsHelper.saveData(key: 'user_email', value: userCredential.user?.email ?? '');
       emit(LoginSuccess());
     } catch (e) {
       emit(LoginError(e.toString()));
@@ -84,7 +88,9 @@ class LoginCubit extends Cubit<LoginState> {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        SharedPrefsHelper.saveData(key: 'user_name', value: userCredential.user?.displayName ?? '');
+        SharedPrefsHelper.saveData(key: 'user_email', value: userCredential.user?.email ?? '');
         emit(LoginSuccess());
       } else {
         emit(LoginError('Facebook Sign-In failed'));

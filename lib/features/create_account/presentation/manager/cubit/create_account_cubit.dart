@@ -37,6 +37,8 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
           key: SharedPrefsKeys.userToken,
           value: response.data['data']['token'],
         );
+        SharedPrefsHelper.saveData(key: 'user_name', value: name);
+        SharedPrefsHelper.saveData(key: 'user_email', value: email);
         emit(CreateAccountSuccess());
       } else if (response.statusCode == 422) {
         String errorMsg = response.data['message'];
@@ -62,6 +64,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
       emit(CreateAccountError('An unexpected error occurred, please try again later.'));
     }
   }
+
   Future<void> signInWithGoogle() async {
     emit(CreateAccountLoading());
     try {
@@ -75,7 +78,9 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      SharedPrefsHelper.saveData(key: 'user_name', value: userCredential.user?.displayName ?? '');
+      SharedPrefsHelper.saveData(key: 'user_email', value: userCredential.user?.email ?? '');
       emit(CreateAccountSuccess());
     } catch (e) {
       emit(CreateAccountError(e.toString()));
@@ -88,7 +93,9 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        SharedPrefsHelper.saveData(key: 'user_name', value: userCredential.user?.displayName ?? '');
+        SharedPrefsHelper.saveData(key: 'user_email', value: userCredential.user?.email ?? '');
         emit(CreateAccountSuccess());
       } else {
         emit(CreateAccountError('Facebook Sign-In failed'));

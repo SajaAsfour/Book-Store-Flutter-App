@@ -14,4 +14,6 @@ class Routes {
   static const String bookFilterScreen = '/bookFilterScreen';
   static const String favoritesScreen = '/favoritesScreen';
   static const String profileScreen = '/profileScreen';
+
+  static const String personalDataScreen = '/personalDataScreen';
 }

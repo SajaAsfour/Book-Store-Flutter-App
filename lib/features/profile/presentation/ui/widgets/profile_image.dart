@@ -20,8 +20,8 @@ class ProfileImage extends StatelessWidget {
         CircleAvatar(
           radius: 50,
           backgroundImage: _image != null
-              ? FileImage(_image!)
-              : AssetImage('assets/images/profile_image.png'),
+              ? FileImage(_image)
+              : AssetImage('assets/images/profile_image.png') as ImageProvider,
         ),
         Positioned(
           bottom: 0,

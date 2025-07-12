@@ -4,9 +4,10 @@ import 'package:book_store/core/services/local/shared_prefs_helper.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/list_tile_widgte.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/profile_image.dart';
+import 'package:book_store/features/profile/data/repo/profile_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:book_store/core/app_routes/routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,26 +18,27 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   File? _image;
-  final ImagePicker _picker = ImagePicker();
+  String? _currentUserEmail;
 
   @override
   void initState() {
     super.initState();
-    _loadImage();
+    _loadUserData();
   }
 
-  // Load the saved image from SharedPreferences
-  Future<void> _loadImage() async {
-    final imagePath = await SharedPrefsHelper.getImagePath();
-    if (imagePath != null && await File(imagePath).exists()) {
+  Future<void> _loadUserData() async {
+    _currentUserEmail = await SharedPrefsHelper.getData(key: 'user_email');
+    final loadedImage = await ProfileRepo.loadUserImage(_currentUserEmail);
+    if (loadedImage != null) {
       setState(() {
-        _image = File(imagePath);
+        _image = loadedImage;
       });
     }
   }
 
   Future<void> _pickImage() async {
-    showDialog(
+    File? pickedImage;
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -48,35 +50,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.camera_alt),
+                leading: const Icon(Icons.camera_alt),
                 title: LabelText(
                     text: 'Camera', size: 15, fontWeight: FontWeight.w500),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  final pickedFile =
-                      await _picker.pickImage(source: ImageSource.camera);
-                  if (pickedFile != null) {
-                    setState(() {
-                      _image = File(pickedFile.path);
-                    });
-                    await SharedPrefsHelper.saveImagePath(pickedFile.path);
-                  }
+                  pickedImage = await ProfileRepo.pickImage(_currentUserEmail);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_library),
+                leading: const Icon(Icons.photo_library),
                 title: LabelText(
                     text: 'Gallery', size: 15, fontWeight: FontWeight.w500),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  final pickedFile =
-                      await _picker.pickImage(source: ImageSource.gallery);
-                  if (pickedFile != null) {
-                    setState(() {
-                      _image = File(pickedFile.path);
-                    });
-                    await SharedPrefsHelper.saveImagePath(pickedFile.path);
-                  }
+                  pickedImage = await ProfileRepo.pickImage(_currentUserEmail);
                 },
               ),
             ],
@@ -84,8 +72,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       },
     );
+    if (pickedImage != null) {
+      setState(() {
+        _image = pickedImage;
+      });
+    }
   }
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +98,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTileWidgte(
               imagePath: 'assets/images/profileIcon.png',
               labelText: 'Personal data',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Routes.personalDataScreen);
+              },
             ),
             ListTileWidgte(
               imagePath: 'assets/images/orderHistoryIcon.png',
@@ -124,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTileWidgte(
               imagePath: 'assets/images/logoutIcon.png',
               labelText: 'Log Out',
-              onTap: () {},
+              onTap: (){},
             ),
           ],
         ),

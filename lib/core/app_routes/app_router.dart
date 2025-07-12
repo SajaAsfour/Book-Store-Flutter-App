@@ -15,6 +15,7 @@ import 'package:book_store/features/all_book/presentation/ui/all_books_screen.da
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
 import 'package:book_store/features/password_change/presentation/ui/password_change_screen.dart';
+import 'package:book_store/features/profile/presentation/ui/personal_data_screen.dart';
 import 'package:book_store/features/reset_password/presentation/ui/reset_password_screen.dart';
 import 'package:book_store/features/splash_screen/presentation/ui/splash_screen.dart';
 import 'package:book_store/features/profile/presentation/ui/profile_screen.dart';
@@ -76,6 +77,9 @@ class AppRouter {
 
       case Routes.profileScreen :
         return MaterialPageRoute(builder: (context)=> ProfileScreen());
+
+      case Routes.personalDataScreen:
+        return MaterialPageRoute(builder: (context)=> PersonalDataScreen());
     }
     return null;
   };
