@@ -79,7 +79,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
- 
+  Future<void> _logout() async {
+    await Navigator.pushNamed(context, Routes.loginScreen);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTileWidgte(
               imagePath: 'assets/images/logoutIcon.png',
               labelText: 'Log Out',
-              onTap: (){},
+              onTap: _logout,
             ),
           ],
         ),

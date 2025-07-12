@@ -33,6 +33,11 @@ class LoginCubit extends Cubit<LoginState> {
           key: SharedPrefsKeys.userToken,
           value: response.data['data']['token'],
         );
+        // Fetch name based on email
+        final storedName = await SharedPrefsHelper.getData(key: 'user_name') ?? '';
+        if (storedName.isEmpty) {
+          SharedPrefsHelper.saveData(key: 'user_name', value: '');
+        }
         SharedPrefsHelper.saveData(key: 'user_email', value: email);
         emit(LoginSuccess());
       } else if (response.statusCode == 422) {

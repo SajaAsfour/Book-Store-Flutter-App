@@ -34,32 +34,31 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   }
 
   Future<void> _loadUserData() async {
-    _nameController.text =
-        await SharedPrefsHelper.getData(key: 'user_name') ?? '';
-    _emailController.text =
-        await SharedPrefsHelper.getData(key: 'user_email') ?? '';
-    _phoneController.text =
-        await SharedPrefsHelper.getData(key: 'user_phone') ?? '';
-    _addressController.text =
-        await SharedPrefsHelper.getData(key: 'user_address') ?? '';
-
     _currentUserEmail = await SharedPrefsHelper.getData(key: 'user_email');
+    _emailController.text = _currentUserEmail ?? '';
+    if (_currentUserEmail != null) {
+      _nameController.text = await SharedPrefsHelper.getData(key: 'user_name') ?? '';
+    }
+    _phoneController.text = await SharedPrefsHelper.getData(key: 'user_phone') ?? '';
+    _addressController.text = await SharedPrefsHelper.getData(key: 'user_address') ?? '';
+
     final imagePath = await SharedPrefsHelper.getData(key: 'user_image_$_currentUserEmail');
     if (imagePath != null && await File(imagePath).exists()) {
-     
-    setState(() {_image = File(imagePath);});}
+      setState(() {
+        _image = File(imagePath);
+      });
+    }
   }
 
   Future<void> _saveUserData() async {
     if (_isEditing) {
-      await SharedPrefsHelper.saveData(
-          key: 'user_name', value: _nameController.text);
-      await SharedPrefsHelper.saveData(
-          key: 'user_email', value: _emailController.text);
-      await SharedPrefsHelper.saveData(
-          key: 'user_phone', value: _phoneController.text);
-      await SharedPrefsHelper.saveData(
-          key: 'user_address', value: _addressController.text);
+      await SharedPrefsHelper.saveData(key: 'user_name', value: _nameController.text);
+      await SharedPrefsHelper.saveData(key: 'user_email', value: _emailController.text);
+      await SharedPrefsHelper.saveData(key: 'user_phone', value: _phoneController.text);
+      await SharedPrefsHelper.saveData(key: 'user_address', value: _addressController.text);
+      if (_image != null) {
+        await SharedPrefsHelper.saveData(key: 'user_image_$_currentUserEmail', value: _image!.path);
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Data saved successfully!')),
       );
@@ -68,6 +67,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
       _isEditing = !_isEditing;
     });
   }
+
   Future<void> _pickImage() async {
     showDialog(
       context: context,
@@ -86,8 +86,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     text: 'Camera', size: 15, fontWeight: FontWeight.w500),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  final pickedFile =
-                      await _picker.pickImage(source: ImageSource.camera);
+                  final pickedFile = await _picker.pickImage(source: ImageSource.camera);
                   if (pickedFile != null) {
                     setState(() {
                       _image = File(pickedFile.path);
@@ -102,8 +101,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     text: 'Gallery', size: 15, fontWeight: FontWeight.w500),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  final pickedFile =
-                      await _picker.pickImage(source: ImageSource.gallery);
+                  final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
                   if (pickedFile != null) {
                     setState(() {
                       _image = File(pickedFile.path);
@@ -138,9 +136,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               GestureDetector(
-                onTap: _saveUserData,
+                onTap: () {
+                  setState(() {
+                    _isEditing = !_isEditing;
+                  });
+                  if (_isEditing) _saveUserData();
+                },
                 child: Row(
                   children: [
                     SizedBox(
@@ -148,19 +150,24 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                       width: 14,
                       child: Image.asset('assets/images/editIcon.png'),
                     ),
-                    SizedBox(width: 5,),
-                    LabelText(text: "Edit", size: 14, fontWeight: FontWeight.w600,color: AppColors.pinkColor,)
+                    SizedBox(width: 5),
+                    LabelText(
+                      text: "Edit",
+                      size: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.pinkColor,
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 30),
               Center(
-              child: GestureDetector(
-                onTap: _pickImage,
-                child: ProfileImage(image: _image),
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: ProfileImage(image: _image),
+                ),
               ),
-            ),
-            SizedBox(height: 10,),
+              SizedBox(height: 10),
               EditableFormField(
                 controller: _nameController,
                 label: 'Name',
