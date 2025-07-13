@@ -116,19 +116,6 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void moveToWishlist(int index) {
-    if (state is CartLoaded) {
-      final currentState = state as CartLoaded;
-      final item = currentState.cartItems[index];
-
-      // 1. نفترض أنك سترسل هذا العنصر إلى الريبو الخاص بالـ wishlist
-      // await wishlistRepo.addToWishlist(item['item_product_id']);
-
-      // 2. بعدها نزيله من السلة
-      removeItem(index);
-    }
-  }
-
   double calculateCartTotal(List<Map<String, dynamic>> items) {
     double total = 0;
     for (var item in items) {

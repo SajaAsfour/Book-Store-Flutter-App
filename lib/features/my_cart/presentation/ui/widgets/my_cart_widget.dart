@@ -67,13 +67,12 @@ class MyCartWidget extends StatelessWidget {
                                         icon: Icon(Icons.delete_outline,
                                             color: AppColors.greyColor),
                                       ),
-                                      IconButton(
-                                        onPressed: () => context
-                                            .read<CartCubit>()
-                                            .moveToWishlist(index),
-                                        icon: Icon(Icons.favorite_border,
-                                            color: AppColors.greyColor),
-                                      ),
+                                      LabelText(
+                                        text: "Remove",
+                                        size: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.greyColor,
+                                      )
                                     ],
                                   ),
                                 ],
@@ -195,7 +194,8 @@ class MyCartWidget extends StatelessWidget {
                             color: AppColors.whiteColor,
                           ),
                           LabelText(
-                              text: "\$${(double.parse(state.total) + 4).toStringAsFixed(2)}",
+                              text:
+                                  "\$${(double.parse(state.total) + 4).toStringAsFixed(2)}",
                               size: 14,
                               fontWeight: FontWeight.w400,
                               color: AppColors.whiteColor),
