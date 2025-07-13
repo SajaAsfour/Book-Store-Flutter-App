@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/title_text.dart';
@@ -89,7 +90,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             button(backgroundColor: AppColors.pinkColor, 
             foregroundColor: AppColors.whiteColor, 
             buttonText: 'Confirm order', onPressed: (){
-
+              Navigator.pushNamed(context, Routes.confirmOrderScreen);
             }),
             
           ],

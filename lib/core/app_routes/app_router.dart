@@ -15,6 +15,7 @@ import 'package:book_store/features/all_book/presentation/ui/all_books_screen.da
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
 import 'package:book_store/features/login/presentation/ui/login_screen.dart';
 import 'package:book_store/features/my_cart/presentation/ui/check_out_screen.dart';
+import 'package:book_store/features/my_cart/presentation/ui/confirm_order_screen.dart';
 import 'package:book_store/features/my_cart/presentation/ui/my_cart_screen.dart';
 import 'package:book_store/features/password_change/presentation/ui/password_change_screen.dart';
 import 'package:book_store/features/profile/presentation/ui/personal_data_screen.dart';
@@ -88,6 +89,9 @@ class AppRouter {
 
       case Routes.myCartScreen:
         return MaterialPageRoute(builder: (context)=> MyCartScreen());
+
+      case Routes.confirmOrderScreen:
+        return MaterialPageRoute(builder: (context)=> ConfirmOrderScreen());
     }
     return null;
   };
