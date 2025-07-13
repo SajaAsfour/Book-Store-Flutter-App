@@ -121,7 +121,10 @@ class CartCubit extends Cubit<CartState> {
       final currentState = state as CartLoaded;
       final item = currentState.cartItems[index];
 
-      
+      // 1. نفترض أنك سترسل هذا العنصر إلى الريبو الخاص بالـ wishlist
+      // await wishlistRepo.addToWishlist(item['item_product_id']);
+
+      // 2. بعدها نزيله من السلة
       removeItem(index);
     }
   }

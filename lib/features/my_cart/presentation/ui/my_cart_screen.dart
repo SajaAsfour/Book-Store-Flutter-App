@@ -17,7 +17,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
   @override
   void initState() {
     super.initState();
+     if (context.read<CartCubit>().state is! CartLoaded) {
     context.read<CartCubit>().fetchCart();
+  }
   }
 
   @override
