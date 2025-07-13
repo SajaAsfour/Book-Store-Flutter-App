@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/my_cart/presentation/manager/cubit/cart_cubit.dart';
@@ -29,148 +30,7 @@ class MyCartWidget extends StatelessWidget {
         } else if (state is CartLoaded) {
           return Stack(
             children: [
-              ListView(
-                padding: const EdgeInsets.only(bottom: 140),
-                children: [
-                  ...state.cartItems.map((item) {
-                    int index = state.cartItems.indexOf(item);
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Card(
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      item['item_product_image'],
-                                      width: 90,
-                                      height: 120,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () => context
-                                            .read<CartCubit>()
-                                            .removeItem(index),
-                                        icon: Icon(Icons.delete_outline,
-                                            color: AppColors.greyColor),
-                                      ),
-                                      LabelText(
-                                        text: "Remove",
-                                        size: 15,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.greyColor,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    LabelText(
-                                        text: item['item_product_name'],
-                                        size: 14,
-                                        fontWeight: FontWeight.w600),
-                                    SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        LabelText(
-                                            text: 'Author: ',
-                                            size: 10,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.greyColor),
-                                        LabelText(
-                                            text: item['item_product_author'] ??
-                                                'Unknown',
-                                            size: 10,
-                                            fontWeight: FontWeight.w400),
-                                      ],
-                                    ),
-                                    SizedBox(height: 6),
-                                    LabelText(
-                                        text:
-                                            '\$${item['item_product_price_after_discount']}',
-                                        size: 18,
-                                        fontWeight: FontWeight.w600),
-                                    SizedBox(height: 4),
-                                    LabelText(
-                                        text:
-                                            'ASIN: ${item['item_product_asin'] ?? 'N/A'}',
-                                        size: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.greyColor),
-                                    SizedBox(height: 12),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () => context
-                                              .read<CartCubit>()
-                                              .decreaseItemQuantity(index),
-                                          icon: Icon(
-                                              Icons.remove_circle_outline,
-                                              color: AppColors.pinkColor),
-                                          iconSize: 18,
-                                        ),
-                                        Text('${item['item_quantity']}',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold)),
-                                        IconButton(
-                                          onPressed: () => context
-                                              .read<CartCubit>()
-                                              .increaseItemQuantity(index),
-                                          icon: Icon(Icons.add_circle_outline,
-                                              color: AppColors.pinkColor),
-                                          iconSize: 18,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SummaryRow(
-                            title: "Subtotal", value: "\$${state.total}"),
-                        SummaryRow(title: "Shipping", value: "Free Delivery"),
-                        SummaryRow(title: "Tax", value: "\$4"),
-                        const Divider(),
-                        SummaryRow(
-                            title: "Total",
-                            value:
-                                "\$${(double.parse(state.total) + 4).toStringAsFixed(2)}",
-                            isTotal: true),
-                        const SizedBox(height: 12),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              CartItem(state: state,),
               Positioned(
                 bottom: 12,
                 left: 24,
@@ -221,7 +81,7 @@ class MyCartWidget extends StatelessWidget {
                             size: 16,
                           ),
                           onPressed: () {
-                            // Checkout action
+                            Navigator.pushNamed(context, Routes.checkOutScreen);
                           },
                         ),
                       ),
@@ -234,6 +94,159 @@ class MyCartWidget extends StatelessWidget {
         }
         return Center(child: Text('Cart is empty'));
       },
+    );
+  }
+}
+
+class CartItem extends StatelessWidget {
+  final dynamic state;
+  const CartItem({
+    super.key, required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.only(bottom: 140),
+      children: [
+        ...state.cartItems.map((item) {
+          int index = state.cartItems.indexOf(item);
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            item['item_product_image'],
+                            width: 90,
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () => context
+                                  .read<CartCubit>()
+                                  .removeItem(index),
+                              icon: Icon(Icons.delete_outline,
+                                  color: AppColors.greyColor),
+                            ),
+                            LabelText(
+                              text: "Remove",
+                              size: 15,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.greyColor,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          LabelText(
+                              text: item['item_product_name'],
+                              size: 14,
+                              fontWeight: FontWeight.w600),
+                          SizedBox(height: 4),
+                          Row(
+                            children: [
+                              LabelText(
+                                  text: 'Author: ',
+                                  size: 10,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.greyColor),
+                              LabelText(
+                                  text: item['item_product_author'] ??
+                                      'Unknown',
+                                  size: 10,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                          SizedBox(height: 6),
+                          LabelText(
+                              text:
+                                  '\$${item['item_product_price_after_discount']}',
+                              size: 18,
+                              fontWeight: FontWeight.w600),
+                          SizedBox(height: 4),
+                          LabelText(
+                              text:
+                                  'ASIN: ${item['item_product_asin'] ?? 'N/A'}',
+                              size: 12,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.greyColor),
+                          SizedBox(height: 12),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () => context
+                                    .read<CartCubit>()
+                                    .decreaseItemQuantity(index),
+                                icon: Icon(
+                                    Icons.remove_circle_outline,
+                                    color: AppColors.pinkColor),
+                                iconSize: 18,
+                              ),
+                              Text('${item['item_quantity']}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              IconButton(
+                                onPressed: () => context
+                                    .read<CartCubit>()
+                                    .increaseItemQuantity(index),
+                                icon: Icon(Icons.add_circle_outline,
+                                    color: AppColors.pinkColor),
+                                iconSize: 18,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 20, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SummaryRow(
+                  title: "Subtotal", value: "\$${state.total}"),
+              SummaryRow(title: "Shipping", value: "Free Delivery"),
+              SummaryRow(title: "Tax", value: "\$4"),
+              const Divider(),
+              SummaryRow(
+                  title: "Total",
+                  value:
+                      "\$${(double.parse(state.total) + 4).toStringAsFixed(2)}",
+                  isTotal: true),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
