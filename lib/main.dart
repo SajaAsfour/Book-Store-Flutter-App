@@ -6,6 +6,8 @@ import 'package:book_store/features/create_account/presentation/manager/cubit/cr
 import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/forget_password/presentation/manager/cubit/forget_password_cubit.dart';
 import 'package:book_store/features/login/presentation/manager/cubit/login_cubit.dart';
+import 'package:book_store/features/my_cart/data/repo/cart_repo.dart';
+import 'package:book_store/features/my_cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:book_store/features/reset_password/presentation/manager/cubit/reset_password_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SharedPrefsHelper.init();
-  DioFactory.init();
+  await DioFactory.init();
+  await DioFactory.setTokenFromStorage();
 
   runApp(
     MultiBlocProvider(
@@ -29,7 +32,7 @@ void main() async {
         BlocProvider<CreateAccountCubit>(
           create: (context) => CreateAccountCubit(),
         ),
-         BlocProvider<ForgetPasswordCubit>(
+        BlocProvider<ForgetPasswordCubit>(
           create: (context) => ForgetPasswordCubit(),
         ),
         BlocProvider<CodeVerificationCubit>(
@@ -38,9 +41,11 @@ void main() async {
         BlocProvider<ResetPasswordCubit>(
           create: (context) => ResetPasswordCubit(),
         ),
-
         BlocProvider<FavoritesCubit>(
-          create: (contex) => FavoritesCubit()
+          create: (contex) => FavoritesCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(CartRepo(), context),
         ),
       ],
       child: const BookStore(),

@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/core/app_routes/routes.dart';
+import 'package:book_store/features/my_cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaginatedFlashSale extends StatefulWidget {
   final List<ProductModel> flashBooks;
@@ -164,15 +166,35 @@ class _PaginatedFlashSaleState extends State<PaginatedFlashSale> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: AppColors.pinkColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Icon(Icons.shopping_cart,
-                                    color: Colors.white, size: 16),
+                              BlocListener<CartCubit, CartState>(
+                                listener: (context, state) {
+                                  if (state is CartSuccess) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(state.message)),
+                                    );
+                                  } else if (state is CartError) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(state.message)),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.pinkColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        context
+                                            .read<CartCubit>()
+                                            .addToCart(book.id, 1);
+                                      },
+                                      icon: Icon(Icons.shopping_cart,
+                                          color: AppColors.whiteColor,
+                                          size: 16),
+                                    )),
                               ),
                             ],
                           )

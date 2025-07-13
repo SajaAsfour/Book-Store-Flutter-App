@@ -59,4 +59,8 @@ class DioFactory {
       ),
     );
   }
+
+  static void clearToken() {
+    _dio?.options.headers.remove("Authorization");
+  }
 }

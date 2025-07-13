@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/services/local/shared_prefs_helper.dart';
+import 'package:book_store/core/services/networking/dio_factory.dart';
 import 'package:book_store/features/login/data/repo/login_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,6 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
           key: SharedPrefsKeys.userToken,
           value: response.data['data']['token'],
         );
+        await DioFactory.setTokenFromStorage();
         // Fetch name based on email
         final storedName = await SharedPrefsHelper.getData(key: 'user_name') ?? '';
         if (storedName.isEmpty) {

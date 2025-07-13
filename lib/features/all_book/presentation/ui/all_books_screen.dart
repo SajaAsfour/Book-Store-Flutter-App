@@ -7,6 +7,7 @@ import 'package:book_store/features/all_book/presentation/ui/widgets/button_for_
 import 'package:book_store/features/book_filter/data/repo/book_filter.dart';
 import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/home/presentation/ui/widgets/search_text_field.dart';
+import 'package:book_store/features/my_cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:book_store/features/search/presentation/ui/widgets/search_results.dart';
 import 'package:flutter/material.dart';
 import 'package:book_store/core/utils/app_colors.dart';
@@ -222,27 +223,41 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                                           BlocBuilder<FavoritesCubit,
                                                   List<ProductModel>>(
                                               builder: (context, favorites) {
-                                                final isFav = context.read<FavoritesCubit>().isFavorite(book);
+                                            final isFav = context
+                                                .read<FavoritesCubit>()
+                                                .isFavorite(book);
 
                                             return Positioned(
                                               top: 8,
                                               left: 8,
                                               child: Container(
-                                                height: 30,
-                                                width: 30,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.whiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: IconButton(onPressed: (){
-                                                    context.read<FavoritesCubit>().toggleFavorite(book);
-                                                }, icon: Icon(
-                                                  isFav ? Icons.favorite : Icons.favorite_border,
-                                                  size: 14,
-                                                  color: isFav ? AppColors.pinkColor: AppColors.blackColor,
-                                                ),) 
-                                              ),
+                                                  height: 30,
+                                                  width: 30,
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.whiteColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<
+                                                              FavoritesCubit>()
+                                                          .toggleFavorite(book);
+                                                    },
+                                                    icon: Icon(
+                                                      isFav
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_border,
+                                                      size: 14,
+                                                      color: isFav
+                                                          ? AppColors.pinkColor
+                                                          : AppColors
+                                                              .blackColor,
+                                                    ),
+                                                  )),
                                             );
                                           }),
                                         ],
@@ -293,24 +308,50 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                                 Spacer(),
-                                                Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.pinkColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  child: IconButton(
-                                                    padding: EdgeInsets.zero,
-                                                    icon: Icon(
-                                                      Icons.shopping_cart,
-                                                      size: 16,
+                                                BlocListener<CartCubit,
+                                                    CartState>(
+                                                  listener: (context, state) {
+                                                    if (state is CartSuccess) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                            content: Text(
+                                                                state.message)),
+                                                      );
+                                                    } else if (state
+                                                        is CartError) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                            content: Text(
+                                                                state.message)),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    decoration: BoxDecoration(
                                                       color:
-                                                          AppColors.whiteColor,
+                                                          AppColors.pinkColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
                                                     ),
-                                                    onPressed: () {},
+                                                    child: IconButton(
+                                                      padding: EdgeInsets.zero,
+                                                      icon: Icon(
+                                                        Icons.shopping_cart,
+                                                        size: 16,
+                                                        color: AppColors
+                                                            .whiteColor,
+                                                      ),
+                                                      onPressed: () {
+                                                        context.read<CartCubit>().addToCart(book.id, 1);
+                                                      },
+                                                    ),
                                                   ),
                                                 )
                                               ],

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/core/services/local/shared_prefs_helper.dart';
+import 'package:book_store/core/services/networking/dio_factory.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/list_tile_widgte.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/profile_image.dart';
@@ -80,7 +81,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _logout() async {
-    await Navigator.pushNamed(context, Routes.loginScreen);
+    await SharedPrefsHelper.removeData(key: SharedPrefsKeys.userToken);
+    await SharedPrefsHelper.removeData(key: 'user_name');
+    await SharedPrefsHelper.removeData(key: 'user_email');
+
+    DioFactory.clearToken();
+
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.loginScreen,
+      (route) => false,
+    );
   }
 
   @override

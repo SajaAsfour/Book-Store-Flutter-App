@@ -266,7 +266,7 @@ class BookDetailsScreen extends StatelessWidget {
             return SizedBox();
           },
         ),
-        bottomNavigationBar: AddCartButton(),
+        bottomNavigationBar: AddCartButton(productId: bookId,),
       ),
     );
   }

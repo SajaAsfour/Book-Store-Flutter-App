@@ -30,7 +30,9 @@ class TopSearchBar extends StatelessWidget {
               radius: 20,
               backgroundColor: AppColors.pinkColor,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.myCartScreen);
+                },
                 icon: Icon(
                   Icons.shopping_cart,
                   color: AppColors.whiteColor,

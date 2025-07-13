@@ -4,6 +4,7 @@ import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/bottom_nav_bar/presentation/ui/widgets/bottom_nav_bar_icon.dart';
 import 'package:book_store/features/all_book/presentation/ui/all_books_screen.dart';
 import 'package:book_store/features/home/presentation/ui/home_screen.dart';
+import 'package:book_store/features/my_cart/presentation/ui/my_cart_screen.dart';
 import 'package:book_store/features/search/presentation/ui/search_screen.dart';
 import 'package:book_store/features/profile/presentation/ui/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     
     case 2: 
       return SearchScreen();
+
+    case 3:
+      return MyCartScreen();
 
     case 4:
       return ProfileScreen();

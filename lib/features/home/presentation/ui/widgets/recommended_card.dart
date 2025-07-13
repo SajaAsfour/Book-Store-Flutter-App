@@ -4,13 +4,14 @@ import 'package:book_store/core/app_routes/routes.dart';
 import 'package:book_store/core/models/product_model.dart';
 import 'package:book_store/core/utils/app_colors.dart';
 import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
-import 'package:book_store/features/home/presentation/ui/widgets/rate_book.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
+import 'package:book_store/features/home/presentation/ui/widgets/rate_book.dart';
+import 'package:book_store/features/my_cart/presentation/manager/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecommendedCard extends StatelessWidget {
-  final ProductModel book; 
+  final ProductModel book;
   final String imageUrl;
   final String title;
   final String author;
@@ -18,6 +19,7 @@ class RecommendedCard extends StatelessWidget {
   final double rating;
   final int reviewCount;
   final int id;
+
   const RecommendedCard({
     super.key,
     required this.imageUrl,
@@ -26,7 +28,8 @@ class RecommendedCard extends StatelessWidget {
     required this.price,
     required this.rating,
     required this.reviewCount,
-    required this.id, required this.book,
+    required this.id,
+    required this.book,
   });
 
   @override
@@ -80,11 +83,24 @@ class RecommendedCard extends StatelessWidget {
                   Row(
                     children: [
                       LabelText(
-                          text: "\$${price.toStringAsFixed(2)}",
-                          size: 18,
-                          fontWeight: FontWeight.w600),
+                        text: "\$${price.toStringAsFixed(2)}",
+                        size: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                       Spacer(),
-                      Container(
+                      BlocListener<CartCubit, CartState>(
+                        listener: (context, state) {
+                          if (state is CartSuccess) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.message)),
+                            );
+                          } else if (state is CartError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.message)),
+                            );
+                          }
+                        },
+                        child: Container(
                           height: 32,
                           width: 32,
                           decoration: BoxDecoration(
@@ -92,29 +108,42 @@ class RecommendedCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.shopping_cart,
-                                color: AppColors.whiteColor, size: 16),
-                          )),
+                            onPressed: () {
+                              context.read<CartCubit>().addToCart(id, 1);
+                            },
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: AppColors.whiteColor,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(width: 8),
                       BlocBuilder<FavoritesCubit, List<ProductModel>>(
                         builder: (context, state) {
                           final isFav = context.read<FavoritesCubit>().isFavorite(book);
                           return Container(
-                              height: 32,
-                              width: 32,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: AppColors.pinkColor, width: 1.5),
-                                borderRadius: BorderRadius.circular(8),
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.pinkColor,
+                                width: 1.5,
                               ),
-                              child: IconButton(
-                                onPressed: () {
-                                  context.read<FavoritesCubit>().toggleFavorite(book);
-                                },
-                                icon: Icon( isFav ? Icons.favorite : Icons.favorite_border,
-                                    color: AppColors.pinkColor, size: 16),
-                              ));
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                context.read<FavoritesCubit>().toggleFavorite(book);
+                              },
+                              icon: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: AppColors.pinkColor,
+                                size: 16,
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ],
