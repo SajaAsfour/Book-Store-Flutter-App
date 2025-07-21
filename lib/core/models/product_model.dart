@@ -37,4 +37,19 @@ class ProductModel {
       category: json['category'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+      'discount': discount,
+      'price_after_discount': priceAfterDiscount,
+      'stock': stock,
+      'best_seller': bestSeller,
+      'image': image,
+      'category': category,
+    };
+  }
 }

@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     context.read<LoginCubit>().login(
                           email: emailController.text,
-                          password: passwordController.text,
+                          password: passwordController.text, context: context,
                         );
                   },
                 ),
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       imageUrl: 'assets/images/facebook_icon.png',
                       text: 'Facebook',
                       onPressed: () {
-                        context.read<LoginCubit>().signInWithFacebook();
+                        context.read<LoginCubit>().signInWithFacebook(context: context);
                       },
                     ),
                     SizedBox(width: 16),
@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       imageUrl: 'assets/images/google_icon.png',
                       text: 'Google',
                       onPressed: () {
-                        context.read<LoginCubit>().signInWithGoogle();
+                        context.read<LoginCubit>().signInWithGoogle(context: context);
                       },
                     )
                   ],

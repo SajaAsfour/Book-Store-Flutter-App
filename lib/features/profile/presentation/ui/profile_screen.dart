@@ -1,7 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:book_store/core/services/local/shared_prefs_helper.dart';
-import 'package:book_store/core/services/networking/dio_factory.dart';
+import 'package:book_store/features/favorites/presentation/manager/cubit/favorites_cubit.dart';
 import 'package:book_store/features/login/presentation/ui/widgets/label_text.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/list_tile_widgte.dart';
 import 'package:book_store/features/profile/presentation/ui/widgets/profile_image.dart';
@@ -9,6 +7,9 @@ import 'package:book_store/features/profile/data/repo/profile_repo.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:book_store/core/app_routes/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// ignore_for_file: prefer_const_constructors
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -84,9 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await SharedPrefsHelper.removeData(key: SharedPrefsKeys.userToken);
     await SharedPrefsHelper.removeData(key: 'user_name');
     await SharedPrefsHelper.removeData(key: 'user_email');
-
-    DioFactory.clearToken();
-
+    // Notify FavoritesCubit of user change
+    await context.read<FavoritesCubit>().onUserChanged();
     Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.loginScreen,
